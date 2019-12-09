@@ -34,7 +34,7 @@ public class HttpRouter extends ClassLoader {
         try (InputStream ins = new FileInputStream(path)) {
             try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
                 byte[] buffer = new byte[1024 * 5];
-                int b = 0;
+                int b;
                 while ((b = ins.read(buffer)) != -1) {
                     out.write(buffer, 0, b);
                 }
