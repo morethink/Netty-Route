@@ -33,7 +33,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> 
             uri = uri.substring(0, uri.indexOf("?"));
         }
         //根据不同的请求API做不同的处理(路由分发)
-        Action<GeneralResponse> action = httpRouter.getRoute(new HttpLabel(uri, request.method()));
+        Action action = httpRouter.getRoute(new HttpLabel(uri, request.method()));
         if (action != null) {
             if (action.isInjectionFullhttprequest()) {
                 ResponseUtil.response(ctx, request, action.call(request));
@@ -45,7 +45,6 @@ public class ServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> 
             generalResponse = new GeneralResponse(HttpResponseStatus.BAD_REQUEST, "请检查你的请求方法及url", null);
             ResponseUtil.response(ctx, request, generalResponse);
         }
-
     }
 
     @Override

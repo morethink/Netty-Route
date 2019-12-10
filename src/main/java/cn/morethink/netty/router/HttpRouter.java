@@ -1,6 +1,5 @@
 package cn.morethink.netty.router;
 
-import cn.morethink.netty.util.GeneralResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpMethod;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +20,7 @@ import java.util.Map;
 @Slf4j
 public class HttpRouter extends ClassLoader {
 
-    private Map<HttpLabel, Action<GeneralResponse>> httpRouterAction = new HashMap<>();
+    private Map<HttpLabel, Action> httpRouterAction = new HashMap<>();
 
     private String classpath = this.getClass().getResource("").getPath();
 
