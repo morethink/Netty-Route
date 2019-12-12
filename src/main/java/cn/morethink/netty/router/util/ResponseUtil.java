@@ -1,4 +1,4 @@
-package cn.morethink.netty.util;
+package cn.morethink.netty.router.util;
 
 
 import io.netty.buffer.Unpooled;
@@ -16,20 +16,18 @@ public class ResponseUtil {
 
     private static final GeneralResponse notFoundGeneralResponse = new GeneralResponse(HttpResponseStatus.NOT_FOUND, "404 NOT_FOUND", null);
 
-    public static void notFound(ChannelHandlerContext ctx, FullHttpRequest request) {
-        response(ctx, request, notFoundGeneralResponse);
+    public static void notFound(ChannelHandlerContext ctx, boolean keepAlive) {
+        response(ctx, keepAlive, notFoundGeneralResponse);
     }
 
     /**
      * 响应HTTP的请求
      *
      * @param ctx
-     * @param request
+     * @param keepAlive
      * @param generalResponse
      */
-    public static void response(ChannelHandlerContext ctx, FullHttpRequest request, GeneralResponse generalResponse) {
-
-        boolean keepAlive = HttpUtil.isKeepAlive(request);
+    public static void response(ChannelHandlerContext ctx, boolean keepAlive, GeneralResponse generalResponse) {
         byte[] jsonByteByte = JsonUtil.toJson(generalResponse).getBytes();
         FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, generalResponse.getStatus(),
                 Unpooled.wrappedBuffer(jsonByteByte));

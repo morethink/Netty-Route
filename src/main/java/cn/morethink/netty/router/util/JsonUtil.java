@@ -1,4 +1,4 @@
-package cn.morethink.netty.util;
+package cn.morethink.netty.router.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

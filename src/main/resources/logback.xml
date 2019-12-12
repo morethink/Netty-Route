@@ -4,11 +4,11 @@
         <layout class="ch.qos.logback.classic.PatternLayout">
             <!--格式化输出：%d:表示日期    %thread:表示线程名     %-5level:级别从左显示5个字符宽度  %msg:日志消息    %n:是换行符-->
             <Pattern>
-                %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger) : %cyan(%msg%n)
+                %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger) Line:%-3L : %cyan(%msg%n)
             </Pattern>
         </layout>
     </appender>
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <!-- 正在记录的日志文件的路径及文件名 -->
         <file>server.log</file>
         <!-- 追加方式记录日志 -->
@@ -18,7 +18,7 @@
             <charset>utf-8</charset>
         </encoder>
     </appender>
-    <root>
+    <root level="info">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
     </root>

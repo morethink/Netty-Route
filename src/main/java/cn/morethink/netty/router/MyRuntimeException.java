@@ -1,6 +1,6 @@
 package cn.morethink.netty.router;
 
-import cn.morethink.netty.util.GeneralResponse;
+import cn.morethink.netty.router.util.GeneralResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.Data;
 
@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class MyRuntimeException extends RuntimeException {
 
-    private transient GeneralResponse generalResponse;
+    private GeneralResponse generalResponse;
 
     public MyRuntimeException(String message) {
         generalResponse = new GeneralResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR, message);
@@ -26,7 +26,7 @@ public class MyRuntimeException extends RuntimeException {
     }
 
     @Override
-    public Throwable fillInStackTrace() {
+    public synchronized Throwable fillInStackTrace() {
         return this;
     }
 }

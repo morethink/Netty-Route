@@ -1,6 +1,6 @@
 package cn.morethink.netty.router;
 
-import cn.morethink.netty.util.GeneralResponse;
+import cn.morethink.netty.router.util.GeneralResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import lombok.Data;
 import lombok.NonNull;
@@ -10,6 +10,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 /**
  * @author 李文浩
@@ -24,7 +25,7 @@ public class Action {
     @NonNull
     private Method method;
 
-    private boolean injectionFullhttprequest;
+    private List<Class> paramsClassList;
 
     public GeneralResponse call(Object... args) {
         try {
@@ -35,10 +36,10 @@ public class Action {
                 return ((MyRuntimeException) targetException).getGeneralResponse();
             }
             log.warn("method invoke error: {}", e);
-            return new GeneralResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR, String.format("EngineAgentJar Internal Error: %s", ExceptionUtils.getRootCause(e)), null);
+            return new GeneralResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR, String.format("Internal Error: %s", ExceptionUtils.getRootCause(e)), null);
         } catch (IllegalAccessException e) {
             log.warn("method invoke error: {}", e);
-            return new GeneralResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR, String.format("EngineAgentJar Internal Error: %s", ExceptionUtils.getRootCause(e)), null);
+            return new GeneralResponse(HttpResponseStatus.INTERNAL_SERVER_ERROR, String.format("Internal Error: %s", ExceptionUtils.getRootCause(e)), null);
         }
     }
 }

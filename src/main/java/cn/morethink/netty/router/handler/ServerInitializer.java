@@ -1,4 +1,4 @@
-package cn.morethink.netty.handler;
+package cn.morethink.netty.router.handler;
 
 import cn.morethink.netty.router.HttpRouter;
 import io.netty.channel.ChannelInitializer;

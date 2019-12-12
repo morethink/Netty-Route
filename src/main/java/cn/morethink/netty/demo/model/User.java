@@ -1,4 +1,4 @@
-package cn.morethink.netty.model;
+package cn.morethink.netty.demo.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

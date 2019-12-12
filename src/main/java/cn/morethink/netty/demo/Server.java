@@ -1,6 +1,6 @@
-package cn.morethink.netty;
+package cn.morethink.netty.demo;
 
-import cn.morethink.netty.handler.ServerInitializer;
+import cn.morethink.netty.router.handler.ServerInitializer;
 import cn.morethink.netty.router.HttpRouter;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
@@ -8,8 +8,6 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.logging.LogLevel;
-import io.netty.handler.logging.LoggingHandler;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -24,14 +22,13 @@ public final class Server {
 
     public static void main(String[] args) throws Exception {
         HttpRouter httpRouter = new HttpRouter();
-        httpRouter.addRouter("cn.morethink.netty.controller.DemoController");
+        httpRouter.addRouter("cn.morethink.netty.demo.controller.DemoController");
 
         EventLoopGroup group = new NioEventLoopGroup(1);
         ServerBootstrap b = new ServerBootstrap();
         b.option(ChannelOption.SO_BACKLOG, 1024);
         b.group(group)
                 .channel(NioServerSocketChannel.class)
-                .handler(new LoggingHandler(LogLevel.INFO))
                 .childHandler(new ServerInitializer(httpRouter));
 
         Channel ch = b.bind(PORT).sync().channel();
