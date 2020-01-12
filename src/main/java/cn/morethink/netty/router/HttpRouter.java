@@ -8,9 +8,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -62,14 +60,6 @@ public class HttpRouter extends ClassLoader {
                             controllerBeans.put(cls.getName(), cls.newInstance());
                         }
                         Action action = new Action(controllerBeans.get(cls.getName()), invokeMethod);
-                        //如果需要FullHttpRequest，就注入FullHttpRequest对象
-                        Class[] params = invokeMethod.getParameterTypes();
-                        List<Class> paramClass = new ArrayList<>();
-                        for (int i = 0; i < params.length; i++) {
-                            Class paramType = params[i];
-                            paramClass.add(paramType);
-                        }
-                        action.setParamsClassList(paramClass);
                         // 保存映射关系
                         httpRouterAction.put(new HttpLabel(uri, new HttpMethod(httpMethod)), action);
                     }

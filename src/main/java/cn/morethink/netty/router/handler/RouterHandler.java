@@ -27,13 +27,13 @@ import java.util.Map;
  * @date 2018/9/5
  */
 @Slf4j
-public class ServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
+public class RouterHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
 
     private static final String DELIMITER = "?";
 
     HttpRouter httpRouter;
 
-    public ServerHandler(HttpRouter httpRouter) {
+    public RouterHandler(HttpRouter httpRouter) {
         this.httpRouter = httpRouter;
     }
 
@@ -53,10 +53,10 @@ public class ServerHandler extends SimpleChannelInboundHandler<FullHttpRequest> 
             }
             QueryStringDecoder queryStringDecoder = new QueryStringDecoder(s);
             Map<String, List<String>> parameters = queryStringDecoder.parameters();
-            List<Class> list = action.getParamsClassList();
-            Object[] objects = new Object[list.size()];
-            for (int i = 0; i < list.size(); i++) {
-                Class c = list.get(i);
+            Class[] classes = action.getMethod().getParameterTypes();
+            Object[] objects = new Object[classes.length];
+            for (int i = 0; i < classes.length; i++) {
+                Class c = classes[i];
                 Annotation[] parameterAnnotation = action.getMethod().getParameterAnnotations()[i];
                 if (parameterAnnotation.length > 0) {
                     for (int j = 0; j < parameterAnnotation.length; j++) {

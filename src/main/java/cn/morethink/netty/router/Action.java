@@ -10,7 +10,6 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.List;
 
 /**
  * @author 李文浩
@@ -24,8 +23,6 @@ public class Action {
     private Object object;
     @NonNull
     private Method method;
-
-    private List<Class> paramsClassList;
 
     public GeneralResponse call(Object... args) {
         try {
