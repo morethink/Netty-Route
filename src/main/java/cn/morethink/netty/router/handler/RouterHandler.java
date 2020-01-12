@@ -57,6 +57,7 @@ public class RouterHandler extends SimpleChannelInboundHandler<FullHttpRequest> 
             Object[] objects = new Object[classes.length];
             for (int i = 0; i < classes.length; i++) {
                 Class c = classes[i];
+                //处理@RequestBody注解
                 Annotation[] parameterAnnotation = action.getMethod().getParameterAnnotations()[i];
                 if (parameterAnnotation.length > 0) {
                     for (int j = 0; j < parameterAnnotation.length; j++) {
@@ -65,6 +66,7 @@ public class RouterHandler extends SimpleChannelInboundHandler<FullHttpRequest> 
                             objects[i] = JsonUtil.fromJson(request, c);
                         }
                     }
+                    //处理数组类型
                 } else if (c.isArray()) {
                     String paramName = action.getMethod().getParameters()[i].getName();
                     List<String> paramList = parameters.get(paramName);
@@ -72,6 +74,7 @@ public class RouterHandler extends SimpleChannelInboundHandler<FullHttpRequest> 
                         objects[i] = ParamParser.INSTANCE.parseArray(c.getComponentType(), paramList);
                     }
                 } else {
+                    //处理基本类型和string
                     String paramName = action.getMethod().getParameters()[i].getName();
                     List<String> paramList = parameters.get(paramName);
                     if (CollectionUtils.isNotEmpty(paramList)) {

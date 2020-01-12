@@ -29,6 +29,7 @@ public class Action {
             return (GeneralResponse) method.invoke(object, args);
         } catch (InvocationTargetException e) {
             Throwable targetException = e.getTargetException();
+            //实现 `@ControllerAdvice` 异常处理，直接抛出自定义异常
             if (targetException instanceof MyRuntimeException) {
                 return ((MyRuntimeException) targetException).getGeneralResponse();
             }
